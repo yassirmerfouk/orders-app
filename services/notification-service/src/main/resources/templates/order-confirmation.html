@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .order-confirmation {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #ff0000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            color: #ff0000;
+        }
+
+        .order-details,
+        .customer-details,
+        .product-list {
+            margin-bottom: 20px;
+        }
+
+        .order-details p,
+        .customer-details p {
+            margin: 5px 0;
+        }
+
+        .product-list table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .product-list table th,
+        .product-list table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .product-list table th {
+            background-color: #f4f4f4;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="order-confirmation">
+    <header>
+        <h1>Order Confirmation</h1>
+        <p>Thank you for your order!</p>
+    </header>
+    <section class="order-details">
+        <p><strong>Order Reference:</strong> <span th:text="${reference}">REF123456</span></p>
+        <p><strong>Date:</strong> <span th:text="${date}">2024-12-10</span></p>
+        <p><strong>Total Amount:</strong> <span th:text="${totalAmount}"> $120.00 </span></p>
+        <p><strong>Payment Method:</strong> <span th:text="${paymentMethod}">Credit Card</span></p>
+    </section>
+    <section class="customer-details">
+        <h2>Customer Information</h2>
+        <p><strong>Name:</strong> <span th:text="${customer.firstName + ' ' + customer.lastName}">John Doe</span></p>
+        <p><strong>Email:</strong> <span th:text="${customer.email}">john.doe@example.com</span> </p>
+    </section>
+    <section class="product-list">
+        <h2>Products</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.productName}">Product 1</td>
+                <td th:text="${product.quantity}">2</td>
+                <td th:text="${product.price}">$40.00</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <p class="total">Total: <span th:text="${totalAmount}">$120.00</span></p>
+</div>
+</body>
+</html>

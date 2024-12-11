@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .payment-confirmation {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            color: #4CAF50;
+        }
+
+        .confirmation-details p {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .confirmation-details strong {
+            color: #555;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+<div class="payment-confirmation">
+    <header>
+        <h1>Payment Confirmation</h1>
+        <p>Thank you for your payment!</p>
+    </header>
+    <section class="confirmation-details">
+        <p><strong>Order Reference:</strong> <span th:text="${orderReference}">ORDER12345</span></p>
+        <p><strong>Payment Amount:</strong> <span th:text="${amount}">$150.00</span></p>
+        <p><strong>Payment Method:</strong> <span th:text="${paymentMethod}">Credit Card</span></p>
+        <p><strong>Date:</strong> <span th:text="${date}">2024-12-10</span></p>
+        <p><strong>Name:</strong> <span th:text="${firstName + ' ' + lastName}">John Doe</span></p>
+        <p><strong>Email:</strong> <span th:text="${email}">john.doe@example.com</span></p>
+    </section>
+    <footer>
+        <p>If you have any questions, please contact us at ym@mail.com</p>
+    </footer>
+</div>
+</body>
+</html>

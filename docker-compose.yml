@@ -1,0 +1,62 @@
+version: "3.7"
+services:
+  db-service:
+    container_name: orders-app-db-service
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - orders-app-db:/var/lib/mysql
+    networks:
+      - orders-app
+    restart: unless-stopped
+  phpmyadmin-service:
+    container_name: orders-app-phpmyadmin-service
+    image: phpmyadmin
+    ports:
+      - "9999:80"
+    environment:
+      - PMA_HOST=orders-app-db-service
+    networks:
+      - orders-app
+    restart: unless-stopped
+  mail-service:
+    container_name: orders-app-mail-service
+    image: maildev/maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+  broker-service:
+    container_name: orders-app-broker-service
+    image: rabbitmq:4.0-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - orders-app-db:/var/lib/rabbitmq
+    networks:
+      - orders-app
+  keycloak-service:
+    container_name: orders-app-keycloak-service
+    image: quay.io/keycloak/keycloak:24.0
+    ports:
+      - "9000:8080"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    command: start-dev
+    volumes:
+      - orders-app-keycloak:/opt/keycloak/data
+    networks:
+          - orders-app
+
+volumes:
+  orders-app-db:
+  orders-app-broker:
+  orders-app-keycloak:
+
+networks:
+  orders-app:
+    driver: bridge

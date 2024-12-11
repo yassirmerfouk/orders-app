@@ -1,0 +1,31 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: customer-service
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=/CUSTOMER-SERVICE/**
+          filters:
+            - RewritePath=/CUSTOMER-SERVICE/(?<segment>.*), /${segment}
+        - id: product-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/PRODUCT-SERVICE/**
+          filters:
+            - RewritePath=/PRODUCT-SERVICE/(?<segment>.*), /${segment}
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/ORDER-SERVICE/**
+          filters:
+            - RewritePath=/ORDER-SERVICE/(?<segment>.*), /${segment}
+      default-filters:
+        - AddRequestHeader=X-API-KEY, ${api.key}
+        - AddRequestHeader=X-API-SECRET, ${api.secret}
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000/realms/orders-app
